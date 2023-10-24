@@ -31,8 +31,9 @@
               Subject: "PROVIDER MESSAGE",
               Body: "Default Message",
               }).then( 
-              message => alert("mail sent successfully")
-          );
+              message => {alert("mail sent successfully");
+                         });
+        return false;
       }
     </script>
 
