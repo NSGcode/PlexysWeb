@@ -279,38 +279,28 @@
     
   <!-- Form submission Javascript -->
 
-  <script>
-    document.getElementById("contactForm").addEventListener("submit", function (e) {
-      e.preventDefault(); // Prevent the default form submission behavior
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("form").submit(function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-      // Collect form data
-      var formData = new FormData(document.getElementById("contactForm"));
-
-      // Create an XMLHttpRequest object
-      var xhr = new XMLHttpRequest();
-
-      // Set up the request
-      xhr.open("POST", "plexys-health-do-user-14793846-0.b.db.ondigitalocean.com", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-      // Define a callback function to handle the response from the server
-      var formMessageWarning = document.getElementById("form-message-warning");
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          // Successful submission, handle the response if needed
-          formMessageWarning.textContent = "Form submitted successfully!";
-          formMessageWarning.style.display = "block";
-        } else {
-          // Error occurred, handle the error
-          formMessageWarning.textContent = "Form submission failed! Please try again";
-          formMessageWarning.style.display = "block";
-        }
-      };
-
-      // Send the form data to the server
-      xhr.send(formData);
+        $.ajax({
+            type: "POST",
+            url: "provider_message.php",
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function(response) {
+                // Update the message container with the response message
+                $("#message-container").text("Your message has been sent!");
+            },
+            error: function() {
+                $("#message-container").text("An error occurred while sending the form.");
+            }
+        });
     });
-  </script>
+});
+</script>
 
     <!-- External JavaScripts -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
