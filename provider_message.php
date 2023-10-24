@@ -14,9 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Compose the email message
     $message = "Name: $name\nEmail: $email\nPhone: $phone\nCompany: $company\nMessage:\n$message";
+    $message = wordwrap($message,70);
 
     // Additional headers
     $headers = "From: $name";
+
+    mail($to, $subject, $message, $headers);
 
     // Send the email
     if (mail($to, $subject, $message, $headers)) {
