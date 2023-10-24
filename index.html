@@ -136,7 +136,7 @@
           </div>
           <div class="row">
             <div class="col-md-12 form-group">
-              <button onclick="sendMail(); return false" class="btn btn-primary rounded-0 py-2 px-4">Send</button>
+              <input type="submit" value="Send Message" class="btn btn-primary rounded-0 py-2 px-4">
             </div>
           </div>
         </form>
@@ -283,7 +283,25 @@
   <!-- Form submission Javascript -->
 
 <script>
+$(document).ready(function() {
+    $("form").submit(function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
+        $.ajax({
+            type: "POST",
+            url: "provider_message.php",
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function(response) {
+                // Update the message container with the response message
+                $("#message-container").text("Your message has been sent!");
+            },
+            error: function() {
+                $("#message-container").text("An error occurred while sending the form.");
+            }
+        });
+    });
+});
 </script>
 
     <!-- External JavaScripts -->
